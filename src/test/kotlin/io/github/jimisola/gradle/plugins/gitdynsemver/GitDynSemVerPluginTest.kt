@@ -1,10 +1,10 @@
-package io.github.jimisola.gitdynsemver
+package io.github.jimisola.gradle.plugins.gitdynsemver
 
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
-import kotlin.test.assertTrue
+import org.junit.jupiter.api.Assertions.assertTrue
 
 class GitDynSemVerPluginTest {
 
@@ -54,7 +54,7 @@ class GitDynSemVerPluginTest {
     }
 
     @Test
-    fun `version_force property overrides computed version`() {
+    fun `version force property overrides computed version`() {
         gitInit()
         gitTag("1.0.0")
         gitCommit("feat: new thing")

@@ -25,16 +25,16 @@ gradlePlugin {
     plugins {
         create("gitDynSemVer") {
             id = "io.github.jimisola.git-dyn-semver"
-            displayName = "Git Dynamic SemVer"
-            description = "Automatically sets project version from git tags using Conventional Commits bump logic. Pure JGit — no git CLI required."
-            tags = listOf("semver", "versioning", "git", "conventional-commits")
-            implementationClass = "io.github.jimisola.gitdynsemver.GitDynSemVerPlugin"
+            displayName = "Git Dynamic Semantic Versioning"
+            description = "Sets project version automatically from git tags using Conventional Commits bump logic (MAJOR/MINOR/PATCH). Pure JGit — no git CLI dependency."
+            tags = listOf("semver", "semantic-versioning", "git", "git-tag", "conventional-commits", "jgit", "versioning", "automation")
+            implementationClass = "io.github.jimisola.gradle.plugins.gitdynsemver.GitDynSemVerPlugin"
         }
     }
 }
 
 dependencies {
-    implementation("org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:7.3.0.202506031305-r")
 
     testImplementation(gradleTestKit())
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.12.2")

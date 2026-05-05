@@ -1,4 +1,4 @@
-package io.github.jimisola.gitdynsemver
+package io.github.jimisola.gradle.plugins.gitdynsemver
 
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.lib.ObjectId
@@ -9,7 +9,7 @@ import org.eclipse.jgit.revwalk.filter.RevFilter
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import java.io.File
 
-object GitTagDynamicSemVer {
+object GitDynSemVer {
 
     data class Options(
         val includeBuildNumber: Boolean = true,

@@ -1,4 +1,4 @@
-package io.github.jimisola.gitdynsemver
+package io.github.jimisola.gradle.plugins.gitdynsemver
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -10,7 +10,7 @@ class GitDynSemVerPlugin : Plugin<Project> {
 
         project.afterEvaluate {
             project.version = project.findProperty("version.force") as String?
-                ?: GitTagDynamicSemVer.resolveVersion(project.rootDir, extension.toOptions())
+                ?: GitDynSemVer.resolveVersion(project.rootDir, extension.toOptions())
         }
 
         project.tasks.register("printVersion") {
