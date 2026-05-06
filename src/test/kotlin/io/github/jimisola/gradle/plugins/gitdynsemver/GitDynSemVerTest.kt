@@ -114,6 +114,22 @@ class GitDynSemVerTest {
                 expectedVersion = "2.0.0-2-SNAPSHOT",
             ),
             Scenario(
+                name = "major-zero-feat-breaking-bumps-minor",
+                setup = { git ->
+                    gitTag(git, "0.1.0")
+                    gitCommit(git, "feat!: remove legacy endpoint")
+                },
+                expectedVersion = "0.2.0-1-SNAPSHOT",
+            ),
+            Scenario(
+                name = "major-zero-breaking-footer-stays-patch",
+                setup = { git ->
+                    gitTag(git, "0.1.0")
+                    gitCommit(git, "fix: bug\n\nBREAKING CHANGE: changed response format")
+                },
+                expectedVersion = "0.1.1-1-SNAPSHOT",
+            ),
+            Scenario(
                 name = "commits-past-annotated-tag",
                 setup = { git ->
                     gitAnnotatedTag(git, "2.0.0", "Release 2.0.0")
