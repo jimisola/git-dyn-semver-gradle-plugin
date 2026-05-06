@@ -82,7 +82,7 @@ class GitDynSemVerPluginTest {
         projectDir.resolve(name).writeText(content)
 
     private fun gitInit() {
-        exec("git", "init")
+        exec("git", "init", "-b", "main")
         exec("git", "config", "user.email", "test@example.com")
         exec("git", "config", "user.name", "Test")
         exec("git", "commit", "--allow-empty", "-m", "chore: init")

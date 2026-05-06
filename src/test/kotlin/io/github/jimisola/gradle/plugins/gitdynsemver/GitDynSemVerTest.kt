@@ -18,7 +18,7 @@ class GitDynSemVerTest {
 
     @BeforeEach
     fun setUp() {
-        git = Git.init().setDirectory(projectDir).call()
+        git = Git.init().setDirectory(projectDir).setInitialBranch("main").call()
         git.repository.config.apply {
             setString("user", null, "email", "test@example.com")
             setString("user", null, "name", "Test")
