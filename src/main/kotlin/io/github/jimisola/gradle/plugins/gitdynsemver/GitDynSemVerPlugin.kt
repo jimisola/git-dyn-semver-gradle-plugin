@@ -6,11 +6,18 @@ import org.gradle.api.Project
 class GitDynSemVerPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
-        val extension = project.extensions.create("gitDynSemVer", GitDynSemVerExtension::class.java)
+        val extension = project.extensions.create("gitDynSemVer", GitDynSemVerExtension::class.java).apply {
+            includeBuildNumber.convention(true)
+            snapshotSuffix.convention("SNAPSHOT")
+        }
 
         project.afterEvaluate {
             project.version = project.findProperty("version.force") as String?
-                ?: GitDynSemVer.resolveVersion(project.rootDir, extension.toOptions())
+                ?: project.providers.of(GitVersionValueSource::class.java) {
+                    parameters.projectDir.set(project.rootDir)
+                    parameters.includeBuildNumber.set(extension.includeBuildNumber)
+                    parameters.snapshotSuffix.set(extension.snapshotSuffix)
+                }.get()
         }
 
         project.tasks.register("printVersion") {
