@@ -33,8 +33,13 @@ gradlePlugin {
     }
 }
 
+repositories {
+    maven("https://repo.eclipse.org/content/repositories/jgit-releases/")
+    gradlePluginPortal()
+}
+
 dependencies {
-    implementation("org.eclipse.jgit:org.eclipse.jgit:7.3.0.202506031305-r")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:7.6.0.202603022253-r")
 
     testImplementation(gradleTestKit())
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.12.2")
