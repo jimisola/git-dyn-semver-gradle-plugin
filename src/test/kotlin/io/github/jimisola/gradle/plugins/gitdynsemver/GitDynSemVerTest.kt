@@ -130,6 +130,30 @@ class GitDynSemVerTest {
                 expectedVersion = "0.1.1-1-SNAPSHOT",
             ),
             Scenario(
+                name = "major-zero-feat-bumps-minor",
+                setup = { git ->
+                    gitTag(git, "0.1.0")
+                    gitCommit(git, "feat: add search")
+                },
+                expectedVersion = "0.2.0-1-SNAPSHOT",
+            ),
+            Scenario(
+                name = "major-zero-feat-breaking-footer-bumps-minor",
+                setup = { git ->
+                    gitTag(git, "0.1.0")
+                    gitCommit(git, "feat: add search\n\nBREAKING CHANGE: changed response format")
+                },
+                expectedVersion = "0.2.0-1-SNAPSHOT",
+            ),
+            Scenario(
+                name = "major-zero-non-feat-breaking-exclamation-stays-patch",
+                setup = { git ->
+                    gitTag(git, "0.1.0")
+                    gitCommit(git, "fix!: change error handling")
+                },
+                expectedVersion = "0.1.1-1-SNAPSHOT",
+            ),
+            Scenario(
                 name = "commits-past-annotated-tag",
                 setup = { git ->
                     gitAnnotatedTag(git, "2.0.0", "Release 2.0.0")
