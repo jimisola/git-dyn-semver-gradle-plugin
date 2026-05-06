@@ -35,7 +35,7 @@ gradlePlugin {
 
 repositories {
     maven("https://repo.eclipse.org/content/repositories/jgit-releases/")
-    gradlePluginPortal()
+    mavenCentral()
 }
 
 dependencies {
