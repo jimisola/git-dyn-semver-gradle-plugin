@@ -11,17 +11,21 @@ class GitDynSemVerPlugin : Plugin<Project> {
             snapshotSuffix.convention("SNAPSHOT")
         }
 
-        project.afterEvaluate {
-            project.version = project.findProperty("version.force") as String?
-                ?: project.providers.of(GitVersionValueSource::class.java) {
+        val versionProvider = project.providers.gradleProperty("version.force")
+            .orElse(
+                project.providers.of(GitVersionValueSource::class.java) {
                     parameters.projectDir.set(project.rootDir)
                     parameters.includeBuildNumber.set(extension.includeBuildNumber)
                     parameters.snapshotSuffix.set(extension.snapshotSuffix)
-                }.get()
+                }
+            )
+
+        project.afterEvaluate {
+            project.version = versionProvider.get()
         }
 
         project.tasks.register("printVersion") {
-            doLast { println(project.version) }
+            doLast { println(versionProvider.get()) }
         }
     }
 }
