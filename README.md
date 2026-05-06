@@ -59,10 +59,10 @@ gitDynSemVer {
 
 ### Forcing a specific version
 
-Pass `-Pgit-dyn-semver.version.force=X.Y.Z` on the command line to override the computed version. Useful in CI release pipelines:
+Pass `-Pversion.force=X.Y.Z` on the command line to override the computed version. Useful in CI release pipelines:
 
 ```bash
-./gradlew publish -Pgit-dyn-semver.version.force=1.5.0
+./gradlew publish -Pversion.force=1.5.0
 ```
 
 ## Task reference
