@@ -2,6 +2,7 @@ package io.github.jimisola.gradle.plugins.gitdynsemver
 
 import org.eclipse.jgit.api.Git
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -14,6 +15,9 @@ class GitDynSemVerTest {
     @TempDir
     lateinit var projectDir: File
 
+    @TempDir
+    lateinit var worktreeParentDir: File
+
     private lateinit var git: Git
 
     @BeforeEach
@@ -22,6 +26,7 @@ class GitDynSemVerTest {
         git.repository.config.apply {
             setString("user", null, "email", "test@example.com")
             setString("user", null, "name", "Test")
+            setBoolean("commit", null, "gpgSign", false)
             save()
         }
         gitCommit(git, "chore: init")
@@ -199,5 +204,18 @@ class GitDynSemVerTest {
     fun version(scenario: Scenario) {
         scenario.setup(git)
         assertEquals(scenario.expectedVersion, GitDynSemVer.resolveVersion(projectDir, scenario.options))
+    }
+
+    @Test
+    fun `resolveVersion works from a git worktree`() {
+        git.tag().setName("3.0.0").setAnnotated(false).call()
+
+        val worktreeDir = File(worktreeParentDir, "wt")
+        ProcessBuilder("git", "worktree", "add", "--detach", worktreeDir.absolutePath)
+            .directory(projectDir)
+            .start()
+            .waitFor()
+
+        assertEquals("3.0.0", GitDynSemVer.resolveVersion(worktreeDir))
     }
 }
