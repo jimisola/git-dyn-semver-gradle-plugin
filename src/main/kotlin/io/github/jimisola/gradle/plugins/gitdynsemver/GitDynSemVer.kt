@@ -21,12 +21,8 @@ object GitDynSemVer {
     private val SEMVER_TAG_REGEX = Regex("""^(\d+)\.(\d+)\.(\d+)$""")
 
     fun resolveVersion(projectDir: File, options: Options = Options()): String {
-        val gitDir = generateSequence(projectDir) { it.parentFile }
-            .map { File(it, ".git") }
-            .first { it.exists() }
-
         val repo = FileRepositoryBuilder()
-            .setGitDir(gitDir)
+            .findGitDir(projectDir)
             .build()
 
         return repo.use { calculateVersion(it, options) }
