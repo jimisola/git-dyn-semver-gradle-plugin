@@ -85,6 +85,7 @@ class GitDynSemVerPluginTest {
         exec("git", "init", "-b", "main")
         exec("git", "config", "user.email", "test@example.com")
         exec("git", "config", "user.name", "Test")
+        exec("git", "config", "commit.gpgsign", "false")
         exec("git", "commit", "--allow-empty", "-m", "chore: init")
     }
 
