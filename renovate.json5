@@ -1,0 +1,42 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+
+  extends: ["config:recommended", ":semanticCommits"],
+
+  semanticCommitType: "chore",
+  semanticCommitScope: "{{datasource}}",
+
+  // Waits for the checks branch protection marks required, so a PR is never
+  // auto-merged before `build` has run.
+  platformAutomerge: true,
+
+  addLabels: ["bot-renovate"],
+  dependencyDashboard: false,
+
+  // The git-cliff version pinned in the setup action is invisible to the
+  // built-in managers; the `# renovate:` comment there makes it a dependency.
+  // A bump also needs the `sha256` default beside it updated by hand.
+  customManagers: [
+    {
+      customType: "regex",
+      managerFilePatterns: ["/^\\.github/actions/.+/action\\.ya?ml$/"],
+      matchStrings: [
+        "# renovate: datasource=(?<datasource>[a-z-]+?) depName=(?<depName>\\S+)\\s+default: \"(?<currentValue>[^\"]+)\"",
+      ],
+    },
+  ],
+
+  packageRules: [
+    { matchUpdateTypes: ["minor"], automerge: true, minimumReleaseAge: "3 days" },
+    { matchUpdateTypes: ["patch"], automerge: true, minimumReleaseAge: "3 days" },
+    { matchUpdateTypes: ["pin"], automerge: true },
+    { matchUpdateTypes: ["major"], minimumReleaseAge: "7 days" },
+    // The git-cliff checksum can't be bumped by Renovate, so don't automerge it.
+    { matchDepNames: ["orhun/git-cliff"], automerge: false },
+    {
+      // Latest LTS only; lift to the next LTS when it ships.
+      matchDepNames: ["java", "openjdk", "temurin"],
+      allowedVersions: "/^25(\\.|$)/",
+    },
+  ],
+}
