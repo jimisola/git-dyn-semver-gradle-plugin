@@ -112,7 +112,7 @@ jobs:
 
       # Handed downstream rather than regenerated at tag time: the notes that
       # were previewed are the notes that ship.
-      - uses: actions/upload-artifact@v7.0.1
+      - uses: actions/upload-artifact@v7.0.2
         with:
           name: release-notes
           path: NOTES.md
