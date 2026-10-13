@@ -209,7 +209,7 @@ jobs:
           fetch-tags: true
           ref: ${{ inputs.ref || github.ref }}
 
-      - uses: actions/download-artifact@v8.0.1
+      - uses: actions/download-artifact@v8.0.2
         with:
           name: release-notes
 
