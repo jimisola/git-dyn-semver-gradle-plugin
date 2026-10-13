@@ -3,7 +3,7 @@ plugins {
     `java-gradle-plugin`
     id("com.gradle.plugin-publish") version "2.2.1"
     // Bootstrap: versions this build with the last published release of itself.
-    id("io.github.jimisola.git-dyn-semver") version "0.1.1"
+    id("io.github.jimisola.git-dyn-semver") version "0.1.2"
 }
 
 group = "io.github.jimisola"
